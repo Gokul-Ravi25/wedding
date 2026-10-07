@@ -12,7 +12,8 @@ const WEDDING_CONFIG = {
       title: "The Groom (மணமகன்)",
       bio: "An engineer with a heart for innovation, adventures, and the love of his life.",
       avatar: "assets/images/hero.jpg",
-      instagram: "@gokul_r"
+      instagram: "@gokulravi___",
+      instagramUrl: "https://www.instagram.com/gokulravi___/"
     },
     bride: {
       name: "Anandhi S",
@@ -20,7 +21,8 @@ const WEDDING_CONFIG = {
       title: "The Bride (மணமகள்)",
       bio: "A creative soul who brings elegance, boundless joy, and magic to every moment.",
       avatar: "assets/images/story.jpg",
-      instagram: "@anandhi_s"
+      instagram: "@abysaran",
+      instagramUrl: "https://www.instagram.com/abysaran/"
     },
     hashtag: "#GokulWedsAnandhi",
     monogram: "G & A"

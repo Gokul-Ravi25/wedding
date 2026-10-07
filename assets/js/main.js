@@ -48,11 +48,23 @@
     if (shlokaSanskrit && config.shloka) shlokaSanskrit.textContent = config.shloka.sanskrit;
     if (shlokaMeaning && config.shloka) shlokaMeaning.textContent = `"${config.shloka.translation}"`;
 
-    // Groom & Bride Bios
+    // Groom & Bride Bios and Socials
     const groomBio = document.getElementById('groom-bio');
     const brideBio = document.getElementById('bride-bio');
+    const groomInsta = document.getElementById('groom-instagram');
+    const brideInsta = document.getElementById('bride-instagram');
+
     if (groomBio) groomBio.textContent = config.couple.groom.bio;
     if (brideBio) brideBio.textContent = config.couple.bride.bio;
+
+    if (groomInsta && config.couple.groom.instagramUrl) {
+      groomInsta.href = config.couple.groom.instagramUrl;
+      groomInsta.textContent = `Instagram ${config.couple.groom.instagram}`;
+    }
+    if (brideInsta && config.couple.bride.instagramUrl) {
+      brideInsta.href = config.couple.bride.instagramUrl;
+      brideInsta.textContent = `Instagram ${config.couple.bride.instagram}`;
+    }
 
     // Story Timeline
     const timelineContainer = document.getElementById('story-timeline-container');
