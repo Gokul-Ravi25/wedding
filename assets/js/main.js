@@ -79,6 +79,7 @@
         <article class="event-card luxury-glass reveal-on-scroll" id="event-${ev.id}">
           <div class="event-image-wrapper">
             <img src="${ev.image}" alt="${ev.title}" class="event-img" loading="lazy" />
+            ${ev.dayNumber ? `<div class="event-day-badge">${ev.dayNumber}</div>` : ''}
             <div class="event-badge">${ev.dressCode}</div>
           </div>
           <div class="event-body">
@@ -147,7 +148,7 @@
 
   /* Helper to format Google Calendar URL */
   function buildGoogleCalendarLink(ev) {
-    const title = encodeURIComponent(`Wedding: ${ev.title} (Gokul & Sneha)`);
+    const title = encodeURIComponent(`Wedding: ${ev.title} (Gokul & Anandhi)`);
     const details = encodeURIComponent(`${ev.description}\nDress Code: ${ev.dressCode}\nVenue: ${ev.venueName}`);
     const location = encodeURIComponent(`${ev.venueName}, ${ev.location}`);
     // Example dates in UTC/local approximation
@@ -515,7 +516,7 @@
     const initialWishes = [
       {
         name: "Uncle Ramesh & Family",
-        message: "Wishing dearest Gokul and Sneha a lifetime of shared laughter, blissful moments, and everlasting prosperity! So excited for the wedding!",
+        message: "Wishing dearest Gokul and Anandhi a lifetime of shared laughter, blissful moments, and everlasting prosperity! So excited for the wedding!",
         time: "Just now"
       },
       {
@@ -572,6 +573,9 @@
 
         loadWishes();
         launchFloatingHearts();
+        if (window.RoyalParticles) {
+          window.RoyalParticles.burst(window.innerWidth / 2, window.innerHeight * 0.7, 60);
+        }
 
         form.reset();
       });

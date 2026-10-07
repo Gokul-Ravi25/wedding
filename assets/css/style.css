@@ -1024,6 +1024,22 @@ body.no-scroll {
   border-radius: var(--radius-full);
 }
 
+.event-day-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--gold-gradient);
+  color: var(--emerald-950);
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--gold-200);
+}
+
 .event-body {
   padding: 2.2rem;
   display: flex;
@@ -1274,21 +1290,16 @@ body.no-scroll {
 .lightbox-next { right: 30px; }
 
 /* ==========================================================
-   RSVP & DIGITAL BLESSINGS
+   DIGITAL BLESSINGS & GUESTBOOK (வாழ்த்துகள்)
    ========================================================== */
-.rsvp-section {
+.blessings-section {
   padding: 7rem 0;
   position: relative;
 }
 
-.rsvp-container-layout {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 3rem;
-}
-
-.rsvp-form-card {
-  padding: 3rem;
+.blessings-container-layout {
+  max-width: 860px;
+  margin: 0 auto;
 }
 
 .form-group {
@@ -1323,50 +1334,23 @@ body.no-scroll {
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
 }
 
-.radio-group-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+.wish-form-wrapper {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-.radio-card-label {
-  background: rgba(5, 23, 17, 0.7);
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  border-radius: var(--radius-sm);
-  padding: 0.9rem 1rem;
+.wish-form-heading {
+  font-family: var(--font-serif-ornate);
+  font-size: 1.25rem;
+  color: var(--gold-300);
+  margin-bottom: 1.2rem;
   text-align: center;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  transition: all 0.3s;
-}
-
-.radio-card-label:has(input:checked) {
-  background: rgba(212, 175, 55, 0.15);
-  border-color: var(--gold-400);
-  color: var(--gold-200);
-}
-
-.checkbox-group-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.88rem;
-  color: var(--ivory-200);
-  cursor: pointer;
 }
 
 /* Digital Wishes Wall */
 .wishes-wall-card {
-  padding: 3rem 2.5rem;
+  padding: 3.5rem 3rem;
   display: flex;
   flex-direction: column;
 }
