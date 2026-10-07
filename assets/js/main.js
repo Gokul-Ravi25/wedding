@@ -513,11 +513,27 @@
     const form = document.getElementById('wish-submission-form');
     if (!list) return;
 
+    const STORAGE_KEY = 'gokul_anandhi_blessings_v1';
+
+    // Clear any previous demo wishes stored in localStorage
+    try {
+      localStorage.removeItem('royal_wedding_wishes');
+      localStorage.removeItem('royal_wedding_rsvps');
+    } catch (e) {}
+
     function loadWishes() {
       let stored = [];
       try {
-        stored = JSON.parse(localStorage.getItem('royal_wedding_wishes') || '[]');
+        stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       } catch (e) {}
+
+      // Filter out any legacy dummy demo messages if any
+      stored = stored.filter(w => 
+        w && w.name && 
+        !w.name.includes("Ramesh") && 
+        !w.name.includes("Pooja") && 
+        !w.name.includes("Arjun")
+      );
 
       if (stored.length === 0) {
         list.innerHTML = `
@@ -557,9 +573,9 @@
         };
 
         try {
-          const stored = JSON.parse(localStorage.getItem('royal_wedding_wishes') || '[]');
+          const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
           stored.unshift(newWish);
-          localStorage.setItem('royal_wedding_wishes', JSON.stringify(stored));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
         } catch (e) {}
 
         loadWishes();
