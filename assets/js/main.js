@@ -513,32 +513,23 @@
     const form = document.getElementById('wish-submission-form');
     if (!list) return;
 
-    const initialWishes = [
-      {
-        name: "Uncle Ramesh & Family",
-        message: "Wishing dearest Gokul and Anandhi a lifetime of shared laughter, blissful moments, and everlasting prosperity! So excited for the wedding!",
-        time: "Just now"
-      },
-      {
-        name: "Pooja & Karthik",
-        message: "Heartiest congratulations to the most radiant couple! May your journey together be as majestic and sweet as this royal celebration.",
-        time: "2 hours ago"
-      },
-      {
-        name: "Arjun (College Squad)",
-        message: "Can't wait to dance at the Sangeet! Gokul brother, you found your true queen. Cheers to the beginning of forever!",
-        time: "Yesterday"
-      }
-    ];
-
     function loadWishes() {
       let stored = [];
       try {
         stored = JSON.parse(localStorage.getItem('royal_wedding_wishes') || '[]');
       } catch (e) {}
 
-      const allWishes = [...stored, ...initialWishes];
-      list.innerHTML = allWishes.map(w => `
+      if (stored.length === 0) {
+        list.innerHTML = `
+          <div class="wish-empty-state" style="text-align: center; padding: 2.5rem 1rem; color: var(--ivory-400);">
+            <div style="font-size: 2.2rem; margin-bottom: 0.6rem;">🪔</div>
+            <p style="font-size: 0.95rem; font-style: italic;">Be the first to shower Gokul & Anandhi with your sacred blessings below!</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = stored.map(w => `
         <div class="wish-card luxury-glass">
           <div class="wish-header">
             <span class="wish-author">${w.name}</span>
