@@ -121,22 +121,78 @@
       <!-- Live Auspicious Countdown -->
       <div class="countdown-box reveal-on-scroll in-view" id="countdown-timer">
         <div class="countdown-unit">
-          <div class="unit-number gold-foil-text" id="cd-days">00</div>
+          <div class="unit-number gold-foil-text" id="cd-days">--</div>
           <div class="unit-label">Days</div>
         </div>
         <div class="countdown-unit">
-          <div class="unit-number gold-foil-text" id="cd-hours">00</div>
+          <div class="unit-number gold-foil-text" id="cd-hours">--</div>
           <div class="unit-label">Hours</div>
         </div>
         <div class="countdown-unit">
-          <div class="unit-number gold-foil-text" id="cd-minutes">00</div>
+          <div class="unit-number gold-foil-text" id="cd-minutes">--</div>
           <div class="unit-label">Minutes</div>
         </div>
         <div class="countdown-unit">
-          <div class="unit-number gold-foil-text" id="cd-seconds">00</div>
+          <div class="unit-number gold-foil-text" id="cd-seconds">--</div>
           <div class="unit-label">Seconds</div>
         </div>
       </div>
+      <script>
+        (function() {
+          function runLiveCountdown() {
+            var daysEl = document.getElementById('cd-days');
+            var hoursEl = document.getElementById('cd-hours');
+            var minutesEl = document.getElementById('cd-minutes');
+            var secondsEl = document.getElementById('cd-seconds');
+            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+            var targetStr = (window.WEDDING_CONFIG && window.WEDDING_CONFIG.weddingDate) || "2026-11-15T19:00:00";
+            var parts = String(targetStr).match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T\s](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+            var targetTime = parts 
+              ? new Date(parseInt(parts[1], 10), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10), parseInt(parts[4] || 0, 10), parseInt(parts[5] || 0, 10), parseInt(parts[6] || 0, 10)).getTime()
+              : new Date(targetStr).getTime();
+
+            function tick() {
+              var now = Date.now();
+              var diff = targetTime - now;
+              if (diff <= 0) {
+                daysEl.textContent = '00';
+                hoursEl.textContent = '00';
+                minutesEl.textContent = '00';
+                secondsEl.textContent = '00';
+                return;
+              }
+              var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+              var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+              var s = Math.floor((diff % (1000 * 60)) / 1000);
+
+              var dStr = String(d).padStart(2, '0');
+              var hStr = String(h).padStart(2, '0');
+              var mStr = String(m).padStart(2, '0');
+              var sStr = String(s).padStart(2, '0');
+
+              if (daysEl.textContent !== dStr) daysEl.textContent = dStr;
+              if (hoursEl.textContent !== hStr) hoursEl.textContent = hStr;
+              if (minutesEl.textContent !== mStr) minutesEl.textContent = mStr;
+              if (secondsEl.textContent !== sStr) {
+                secondsEl.textContent = sStr;
+                secondsEl.classList.remove('tick-pulse');
+                void secondsEl.offsetWidth;
+                secondsEl.classList.add('tick-pulse');
+              }
+            }
+            tick();
+            if (window.__weddingCountdownInterval) clearInterval(window.__weddingCountdownInterval);
+            window.__weddingCountdownInterval = setInterval(tick, 1000);
+          }
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runLiveCountdown);
+          } else {
+            runLiveCountdown();
+          }
+        })();
+      </script>
 
       <div class="hero-cta-group reveal-on-scroll in-view">
         <a href="#events" class="btn-royal-solid">
@@ -391,9 +447,9 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="wedding-config.js?v=3"></script>
-  <script src="assets/js/particles.js?v=3"></script>
-  <script src="assets/js/audio.js?v=3"></script>
-  <script src="assets/js/main.js?v=3"></script>
+  <script src="wedding-config.js?v=4"></script>
+  <script src="assets/js/particles.js?v=4"></script>
+  <script src="assets/js/audio.js?v=4"></script>
+  <script src="assets/js/main.js?v=4"></script>
 </body>
 </html>

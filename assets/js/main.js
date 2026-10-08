@@ -281,11 +281,11 @@
       const mStr = String(minutes).padStart(2, '0');
       const sStr = String(seconds).padStart(2, '0');
 
-      if (daysEl.textContent !== dStr) daysEl.textContent = dStr;
-      if (hoursEl.textContent !== hStr) hoursEl.textContent = hStr;
-      if (minutesEl.textContent !== mStr) minutesEl.textContent = mStr;
+      if (daysEl && daysEl.textContent !== dStr) daysEl.textContent = dStr;
+      if (hoursEl && hoursEl.textContent !== hStr) hoursEl.textContent = hStr;
+      if (minutesEl && minutesEl.textContent !== mStr) minutesEl.textContent = mStr;
 
-      if (secondsEl.textContent !== sStr) {
+      if (secondsEl && secondsEl.textContent !== sStr) {
         secondsEl.textContent = sStr;
         secondsEl.classList.remove('tick-pulse');
         void secondsEl.offsetWidth;
@@ -294,7 +294,8 @@
     }
 
     update();
-    setInterval(update, 1000);
+    if (window.__weddingCountdownInterval) clearInterval(window.__weddingCountdownInterval);
+    window.__weddingCountdownInterval = setInterval(update, 1000);
   }
 
   /* ==========================================================
