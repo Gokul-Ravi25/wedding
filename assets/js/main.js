@@ -5,7 +5,17 @@
 (function () {
   'use strict';
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function getWeddingConfig() {
+    if (typeof window !== 'undefined' && window.WEDDING_CONFIG) {
+      return window.WEDDING_CONFIG;
+    }
+    if (typeof WEDDING_CONFIG !== 'undefined') {
+      return WEDDING_CONFIG;
+    }
+    return null;
+  }
+
+  function startApp() {
     initParticles();
     hydrateContent();
     initInvitationOverlay();
@@ -16,7 +26,13 @@
     initRSVP();
     initWishesWall();
     initFAQ();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startApp);
+  } else {
+    startApp();
+  }
 
   /* ==========================================================
      1. Particles Initialization
@@ -31,7 +47,7 @@
      2. Content Hydration from WEDDING_CONFIG
      ========================================================== */
   function hydrateContent() {
-    const config = window.WEDDING_CONFIG;
+    const config = getWeddingConfig();
     if (!config) return;
 
     // Couple Details
@@ -213,10 +229,29 @@
      4. Auspicious Live Countdown
      ========================================================== */
   function initCountdown() {
-    const config = window.WEDDING_CONFIG;
+    const config = getWeddingConfig();
     if (!config) return;
 
-    const targetDate = new Date(config.weddingDate).getTime();
+    function parseDate(str) {
+      if (!str) return null;
+      if (typeof str === 'number') return str;
+      const parts = String(str).match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T\s](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+      if (parts) {
+        return new Date(
+          parseInt(parts[1], 10),
+          parseInt(parts[2], 10) - 1,
+          parseInt(parts[3], 10),
+          parseInt(parts[4] || '0', 10),
+          parseInt(parts[5] || '0', 10),
+          parseInt(parts[6] || '0', 10)
+        ).getTime();
+      }
+      return new Date(str).getTime();
+    }
+
+    const targetDate = parseDate(config.weddingDate);
+    if (!targetDate) return;
+
     const daysEl = document.getElementById('cd-days');
     const hoursEl = document.getElementById('cd-hours');
     const minutesEl = document.getElementById('cd-minutes');
@@ -241,10 +276,21 @@
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+      const dStr = String(days).padStart(2, '0');
+      const hStr = String(hours).padStart(2, '0');
+      const mStr = String(minutes).padStart(2, '0');
+      const sStr = String(seconds).padStart(2, '0');
+
+      if (daysEl.textContent !== dStr) daysEl.textContent = dStr;
+      if (hoursEl.textContent !== hStr) hoursEl.textContent = hStr;
+      if (minutesEl.textContent !== mStr) minutesEl.textContent = mStr;
+
+      if (secondsEl.textContent !== sStr) {
+        secondsEl.textContent = sStr;
+        secondsEl.classList.remove('tick-pulse');
+        void secondsEl.offsetWidth;
+        secondsEl.classList.add('tick-pulse');
+      }
     }
 
     update();
@@ -330,7 +376,7 @@
      7. Photo Gallery & Lightbox
      ========================================================== */
   function initGallery() {
-    const config = window.WEDDING_CONFIG;
+    const config = getWeddingConfig();
     if (!config || !config.gallery) return;
 
     const galleryGrid = document.getElementById('gallery-grid');

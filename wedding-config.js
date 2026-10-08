@@ -3,7 +3,7 @@
  * Edit this file to customize names, dates, venues, ceremonies, and photos.
  */
 
-const WEDDING_CONFIG = {
+window.WEDDING_CONFIG = {
   // Couple Information
   couple: {
     groom: {
@@ -208,3 +208,6 @@ const WEDDING_CONFIG = {
     }
   ]
 };
+
+// Also expose as var for legacy/direct script scope
+var WEDDING_CONFIG = window.WEDDING_CONFIG;
